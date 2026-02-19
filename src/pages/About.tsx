@@ -1,7 +1,8 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import Layout from "@/components/layout/Layout";
-import brandStory from "@/assets/brand-story.jpg";
-import packaging from "@/assets/packaging.jpg";
+import lifestyleCloseup from "@/assets/lifestyle-closeup.jpg";
+import productErgoPair from "@/assets/product-ergo-pair.jpg";
+import detailMesh from "@/assets/detail-mesh.jpg";
 
 const About = () => {
   const { t } = useLanguage();
@@ -18,7 +19,7 @@ const About = () => {
     <Layout>
       {/* Hero */}
       <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
-        <img src={brandStory} alt="GRAPHENE" className="absolute inset-0 w-full h-full object-cover" />
+        <img src={lifestyleCloseup} alt="GRAPHENE" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-foreground/50" />
         <div className="relative z-10 text-center text-primary-foreground">
           <h1 className="text-4xl md:text-6xl tracking-[0.3em] font-light mb-4">GRAPHENE</h1>
@@ -88,18 +89,8 @@ const About = () => {
               </p>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-4">
-            {[
-              { label: t("导热系数", "Thermal Conductivity"), value: "5300 W/mK" },
-              { label: t("抗菌率", "Antibacterial Rate"), value: "≥ 99%" },
-              { label: t("远红外波长", "Far-Infrared"), value: "8–15 μm" },
-              { label: t("研发专利", "Patents"), value: "12+" },
-            ].map((stat) => (
-              <div key={stat.label} className="border border-border p-6 text-center">
-                <p className="text-2xl font-light text-foreground mb-2">{stat.value}</p>
-                <p className="text-xs tracking-widest text-muted-foreground uppercase">{stat.label}</p>
-              </div>
-            ))}
+          <div className="aspect-square overflow-hidden">
+            <img src={detailMesh} alt={t("石墨烯细节", "Graphene detail")} className="w-full h-full object-cover" />
           </div>
         </div>
       </section>
@@ -109,7 +100,7 @@ const About = () => {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
             <div className="aspect-square overflow-hidden">
-              <img src={packaging} alt={t("品牌包装", "Brand Packaging")} className="w-full h-full object-cover" />
+              <img src={productErgoPair} alt={t("品牌包装", "Brand Packaging")} className="w-full h-full object-cover" />
             </div>
             <div>
               <p className="text-xs tracking-[0.4em] uppercase text-muted-foreground mb-6">

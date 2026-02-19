@@ -2,11 +2,17 @@ import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import Layout from "@/components/layout/Layout";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
-import heroBg from "@/assets/hero-bg.jpg";
-import brandStory from "@/assets/brand-story.jpg";
-import pillowErgonomic from "@/assets/pillow-ergonomic.jpg";
-import pillowSquare from "@/assets/pillow-square.jpg";
+import lifestyleBed from "@/assets/lifestyle-bed.jpg";
+import lifestyleChair from "@/assets/lifestyle-chair.jpg";
+import productErgoSide from "@/assets/product-ergo-side.jpg";
+import productErgoFlat from "@/assets/product-ergo-flat.jpg";
+import productErgoStack from "@/assets/product-ergo-stack.jpg";
+import productErgoTilt from "@/assets/product-ergo-tilt.jpg";
+import detailMesh from "@/assets/detail-mesh.jpg";
+import lifestyleFlatlay from "@/assets/lifestyle-flatlay.jpg";
 import { products } from "@/data/products";
+
+const carouselImages = [productErgoSide, productErgoFlat, productErgoStack, productErgoTilt];
 
 const Index = () => {
   const { t } = useLanguage();
@@ -16,7 +22,7 @@ const Index = () => {
     <Layout>
       {/* Hero */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        <img src={heroBg} alt="GRAPHENE" className="absolute inset-0 w-full h-full object-cover" />
+        <img src={lifestyleBed} alt="GRAPHENE" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-foreground/30" />
         <div className="relative z-10 text-center text-primary-foreground px-6">
           <p className="text-sm tracking-[0.5em] uppercase mb-4 opacity-80">
@@ -61,7 +67,7 @@ const Index = () => {
             </p>
           </div>
           <div className="aspect-[4/5] overflow-hidden">
-            <img src={brandStory} alt={t("品牌故事", "Brand Story")} className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" />
+            <img src={lifestyleChair} alt={t("品牌故事", "Brand Story")} className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" />
           </div>
         </div>
       </section>
@@ -77,12 +83,12 @@ const Index = () => {
           </h2>
           <Carousel opts={{ align: "start", loop: true }} className="mx-12">
             <CarouselContent>
-              {featured.map((product) => (
+              {featured.map((product, i) => (
                 <CarouselItem key={product.id} className="md:basis-1/2 lg:basis-1/3">
                   <Link to="/pillows" className="group block">
                     <div className="aspect-square bg-background overflow-hidden mb-4">
                       <img
-                        src={product.image === "pillow-ergonomic" ? pillowErgonomic : pillowSquare}
+                        src={carouselImages[i % carouselImages.length]}
                         alt={t(product.nameZh, product.nameEn)}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
@@ -103,7 +109,8 @@ const Index = () => {
 
       {/* Graphene Tech Banner */}
       <section className="relative py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-foreground" />
+        <img src={detailMesh} alt="Graphene mesh detail" className="absolute inset-0 w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-foreground/70" />
         <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
           <p className="text-xs tracking-[0.5em] uppercase text-primary-foreground/60 mb-6">
             {t("石墨烯科技", "Graphene Technology")}
@@ -130,8 +137,8 @@ const Index = () => {
       <section className="max-w-7xl mx-auto px-6 py-24">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {[
-            { image: pillowErgonomic, zh: "人体工学枕", en: "Ergonomic Pillows" },
-            { image: pillowSquare, zh: "方型枕", en: "Square Pillows" },
+            { image: productErgoStack, zh: "人体工学枕", en: "Ergonomic Pillows" },
+            { image: lifestyleFlatlay, zh: "方型枕", en: "Square Pillows" },
           ].map((cat) => (
             <Link key={cat.en} to="/pillows" className="group relative aspect-[3/2] overflow-hidden">
               <img src={cat.image} alt={t(cat.zh, cat.en)} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />

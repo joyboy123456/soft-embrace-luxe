@@ -3,10 +3,21 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import Layout from "@/components/layout/Layout";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { products, type Product } from "@/data/products";
-import pillowErgonomic from "@/assets/pillow-ergonomic.jpg";
-import pillowSquare from "@/assets/pillow-square.jpg";
+import productErgoSide from "@/assets/product-ergo-side.jpg";
+import productErgoFlat from "@/assets/product-ergo-flat.jpg";
+import productErgoStack from "@/assets/product-ergo-stack.jpg";
+import productErgoTilt from "@/assets/product-ergo-tilt.jpg";
+import productErgoPair from "@/assets/product-ergo-pair.jpg";
+import lifestyleCloseup from "@/assets/lifestyle-closeup.jpg";
 
-const getImage = (key: string) => (key === "pillow-ergonomic" ? pillowErgonomic : pillowSquare);
+const productImages: Record<string, string> = {
+  "ergo-blue": productErgoSide,
+  "ergo-pink": productErgoFlat,
+  "ergo-grey": productErgoStack,
+  "square-gold": productErgoTilt,
+  "square-red": productErgoPair,
+  "square-charcoal": lifestyleCloseup,
+};
 
 type Filter = "all" | "ergonomic" | "square";
 
@@ -63,7 +74,7 @@ const Pillows = () => {
             >
               <div className="aspect-square bg-secondary/30 overflow-hidden mb-4">
                 <img
-                  src={getImage(product.image)}
+                  src={productImages[product.id]}
                   alt={t(product.nameZh, product.nameEn)}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
@@ -103,7 +114,7 @@ const Pillows = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
                 <div className="aspect-square bg-secondary/30 overflow-hidden">
                   <img
-                    src={getImage(selected.image)}
+                    src={productImages[selected.id]}
                     alt={t(selected.nameZh, selected.nameEn)}
                     className="w-full h-full object-cover"
                   />

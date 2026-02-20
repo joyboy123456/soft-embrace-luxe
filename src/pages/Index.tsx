@@ -133,6 +133,50 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Brainwave Sleep CTA */}
+      <section className="max-w-7xl mx-auto px-6 py-24">
+        <Link to="/brainwave" className="group grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div>
+            <p className="text-xs tracking-[0.4em] uppercase text-muted-foreground mb-6">
+              {t("脑电波助眠理念", "Brainwave Sleep Science")}
+            </p>
+            <h2 className="text-3xl md:text-4xl font-light text-foreground mb-6 leading-tight">
+              {t("把放松看得见：α 波与睡前状态", "See Relaxation: α Waves & Pre-Sleep State")}
+            </h2>
+            <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+              {t(
+                "浙江大学联合研究发现，石墨烯中远红外加热可有效提升放松相关的 α 波出现频率 2.3 倍。",
+                "Joint research with Zhejiang University found that graphene far-infrared heating increases relaxation-related α wave frequency by 2.3×."
+              )}
+            </p>
+            <span className="inline-block text-xs tracking-[0.3em] uppercase text-foreground border-b border-foreground pb-1 group-hover:pb-2 transition-all">
+              {t("了解详情", "Learn More")} →
+            </span>
+          </div>
+          <div className="flex flex-col gap-3">
+            {[
+              { label: "θ", amp: 16, freq: 2, opacity: "opacity-40" },
+              { label: "α", amp: 24, freq: 4, opacity: "opacity-80" },
+              { label: "β", amp: 8, freq: 9, opacity: "opacity-20" },
+            ].map(wave => {
+              const pts = Array.from({ length: 200 }, (_, i) => {
+                const x = (i / 199) * 600;
+                const y = 25 + wave.amp * Math.sin((i / 199) * Math.PI * 2 * wave.freq);
+                return `${x},${y}`;
+              }).join(" ");
+              return (
+                <div key={wave.label} className="flex items-center gap-3">
+                  <span className="text-xs text-muted-foreground w-6">{wave.label}</span>
+                  <svg viewBox="0 0 600 50" className={`flex-1 h-10 text-foreground ${wave.opacity}`} preserveAspectRatio="none">
+                    <polyline points={pts} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="group-hover:animate-pulse" style={{ animationDuration: "2.5s" }} />
+                  </svg>
+                </div>
+              );
+            })}
+          </div>
+        </Link>
+      </section>
+
       {/* Category Cards */}
       <section className="max-w-7xl mx-auto px-6 py-24">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import Layout from "@/components/layout/Layout";
+import BrainwaveDemo from "@/components/BrainwaveDemo";
 import detailMesh from "@/assets/detail-mesh.jpg";
 
 /* ───── tiny reusable SVG wave ───── */
@@ -149,7 +150,7 @@ const BrainwaveSleep = () => {
         </div>
       </section>
 
-      {/* ── Module C: 加热前 vs 加热后 ── */}
+      {/* ── Module C: 加热前 vs 加热后 (interactive demo) ── */}
       <section className="max-w-5xl mx-auto px-6 py-24">
         <p className="text-xs tracking-[0.4em] uppercase text-muted-foreground mb-4 text-center">
           {t("实验观察", "Experimental Observation")}
@@ -158,40 +159,9 @@ const BrainwaveSleep = () => {
           {t("石墨烯加热对 α 波的影响", "Effect of Graphene Heating on α Waves")}
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Before */}
-          <div className="border border-border p-8 relative">
-            <span className="absolute top-4 left-4 text-[10px] tracking-widest uppercase text-muted-foreground">
-              {t("加热前", "Before Heating")}
-            </span>
-            <div className="mt-8">
-              <AlphaWave amplitude={8} frequency={2} className="w-full h-16 text-muted-foreground/40" />
-              <AlphaWave amplitude={6} frequency={3} className="w-full h-16 text-muted-foreground/30 mt-2" />
-            </div>
-            <p className="text-xs text-muted-foreground mt-6 text-center">
-              {t("O1/O2 点位 α 波幅度较低、出现频率较少", "Low α wave amplitude and frequency at O1/O2")}
-            </p>
-          </div>
+        <BrainwaveDemo />
 
-          {/* After */}
-          <div className="border-2 border-foreground p-8 relative">
-            <span className="absolute top-4 left-4 text-[10px] tracking-widest uppercase text-foreground font-medium">
-              {t("加热后", "After Heating")}
-            </span>
-            <span className="absolute top-4 right-4 text-[10px] tracking-wider text-foreground/70 text-right leading-relaxed">
-              {t("频率 ×2.3 · 持续 ×3.0", "Freq ×2.3 · Duration ×3.0")}
-            </span>
-            <div className="mt-8">
-              <AlphaWave amplitude={22} frequency={4} className="w-full h-16 text-foreground" />
-              <AlphaWave amplitude={18} frequency={5} className="w-full h-16 text-foreground/70 mt-2" />
-            </div>
-            <p className="text-xs text-foreground/70 mt-6 text-center">
-              {t("α 波出现频率提升 2.3 倍，持续时间提升 3.0 倍", "α wave frequency increased 2.3×, duration increased 3.0×")}
-            </p>
-          </div>
-        </div>
-
-        <p className="text-xs text-muted-foreground text-center mt-6">
+        <p className="text-xs text-muted-foreground text-center mt-8">
           {t("检测点位：O1、O2（枕区），代表情绪放松状态", "Detection points: O1, O2 (occipital), representing relaxed state")}
         </p>
       </section>

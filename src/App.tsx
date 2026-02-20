@@ -7,6 +7,7 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import Index from "./pages/Index";
 import Pillows from "./pages/Pillows";
 import About from "./pages/About";
+import BrainwaveSleep from "./pages/BrainwaveSleep";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
@@ -22,6 +23,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/pillows" element={<Pillows />} />
+            <Route path="/brainwave" element={<BrainwaveSleep />} />
             <Route path="/about" element={<About />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="*" element={<NotFound />} />

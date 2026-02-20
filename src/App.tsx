@@ -9,6 +9,7 @@ import Pillows from "./pages/Pillows";
 import About from "./pages/About";
 import BrainwaveSleep from "./pages/BrainwaveSleep";
 import Admin from "./pages/Admin";
+import ProtectedAdminRoute from "./components/ProtectedAdminRoute";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,7 +26,7 @@ const App = () => (
             <Route path="/pillows" element={<Pillows />} />
             <Route path="/brainwave" element={<BrainwaveSleep />} />
             <Route path="/about" element={<About />} />
-            <Route path="/admin" element={<Admin />} />
+            <Route path="/admin" element={<ProtectedAdminRoute><Admin /></ProtectedAdminRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

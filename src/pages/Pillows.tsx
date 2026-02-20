@@ -2,22 +2,8 @@ import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import Layout from "@/components/layout/Layout";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { products, type Product } from "@/data/products";
-import productErgoSide from "@/assets/product-ergo-side.jpg";
-import productErgoFlat from "@/assets/product-ergo-flat.jpg";
-import productErgoStack from "@/assets/product-ergo-stack.jpg";
-import productErgoTilt from "@/assets/product-ergo-tilt.jpg";
-import productErgoPair from "@/assets/product-ergo-pair.jpg";
-import lifestyleCloseup from "@/assets/lifestyle-closeup.jpg";
-
-const productImages: Record<string, string> = {
-  "ergo-blue": productErgoSide,
-  "ergo-pink": productErgoFlat,
-  "ergo-grey": productErgoStack,
-  "square-gold": productErgoTilt,
-  "square-red": productErgoPair,
-  "square-charcoal": lifestyleCloseup,
-};
+import { useProducts } from "@/hooks/useProducts";
+import type { Product } from "@/types/product";
 
 type Filter = "all" | "ergonomic" | "square";
 
@@ -25,8 +11,7 @@ const Pillows = () => {
   const { t } = useLanguage();
   const [filter, setFilter] = useState<Filter>("all");
   const [selected, setSelected] = useState<Product | null>(null);
-
-  const filtered = filter === "all" ? products : products.filter((p) => p.type === filter);
+  const { data: products = [], isLoading } = useProducts(filter === "all" ? undefined : filter);
 
   const filters: { key: Filter; zh: string; en: string }[] = [
     { key: "all", zh: "全部", en: "All" },
@@ -65,37 +50,47 @@ const Pillows = () => {
 
       {/* Product Grid */}
       <div className="max-w-7xl mx-auto px-6 pb-24">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
-          {filtered.map((product) => (
-            <div
-              key={product.id}
-              className="group cursor-pointer"
-              onClick={() => setSelected(product)}
-            >
-              <div className="aspect-square bg-secondary/30 overflow-hidden mb-4">
-                <img
-                  src={productImages[product.id]}
-                  alt={t(product.nameZh, product.nameEn)}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+        {isLoading ? (
+          <p className="text-center text-muted-foreground py-20">{t("加载中…", "Loading…")}</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
+            {products.map((product) => (
+              <div
+                key={product.id}
+                className="group cursor-pointer"
+                onClick={() => setSelected(product)}
+              >
+                <div className="aspect-square bg-secondary/30 overflow-hidden mb-4">
+                  {product.image_url ? (
+                    <img
+                      src={product.image_url}
+                      alt={t(product.name_zh, product.name_en)}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm">
+                      {t("暂无图片", "No Image")}
+                    </div>
+                  )}
+                </div>
+                <h3 className="text-sm text-foreground tracking-wide mb-2">
+                  {t(product.name_zh, product.name_en)}
+                </h3>
+                <div className="flex items-center gap-2 mb-2">
+                  {product.colors.map((c, i) => (
+                    <span
+                      key={i}
+                      className="w-3 h-3 rounded-full border border-border"
+                      style={{ backgroundColor: c.hex }}
+                      title={c.name}
+                    />
+                  ))}
+                </div>
+                <p className="text-xs text-muted-foreground">{product.size}</p>
               </div>
-              <h3 className="text-sm text-foreground tracking-wide mb-2">
-                {t(product.nameZh, product.nameEn)}
-              </h3>
-              <div className="flex items-center gap-2 mb-2">
-                {product.colors.map((c) => (
-                  <span
-                    key={c.hex}
-                    className="w-3 h-3 rounded-full border border-border"
-                    style={{ backgroundColor: c.hex }}
-                    title={c.name}
-                  />
-                ))}
-              </div>
-              <p className="text-xs text-muted-foreground">{product.size}</p>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Product Detail Dialog */}
@@ -105,23 +100,29 @@ const Pillows = () => {
             <>
               <DialogHeader>
                 <DialogTitle className="text-lg font-light tracking-wide">
-                  {t(selected.nameZh, selected.nameEn)}
+                  {t(selected.name_zh, selected.name_en)}
                 </DialogTitle>
                 <DialogDescription className="text-xs tracking-widest uppercase text-muted-foreground">
-                  {t(selected.typeZh, selected.typeEn)}
+                  {t(selected.type_zh, selected.type_en)}
                 </DialogDescription>
               </DialogHeader>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
                 <div className="aspect-square bg-secondary/30 overflow-hidden">
-                  <img
-                    src={productImages[selected.id]}
-                    alt={t(selected.nameZh, selected.nameEn)}
-                    className="w-full h-full object-cover"
-                  />
+                  {selected.image_url ? (
+                    <img
+                      src={selected.image_url}
+                      alt={t(selected.name_zh, selected.name_en)}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-muted-foreground">
+                      {t("暂无图片", "No Image")}
+                    </div>
+                  )}
                 </div>
                 <div className="flex flex-col justify-center">
                   <p className="text-sm text-muted-foreground leading-relaxed mb-6">
-                    {t(selected.descZh, selected.descEn)}
+                    {t(selected.desc_zh, selected.desc_en)}
                   </p>
                   <div className="space-y-4">
                     <div>
@@ -135,8 +136,8 @@ const Pillows = () => {
                         {t("可选颜色", "Available Colors")}
                       </p>
                       <div className="flex gap-3">
-                        {selected.colors.map((c) => (
-                          <div key={c.hex} className="flex items-center gap-2">
+                        {selected.colors.map((c, i) => (
+                          <div key={i} className="flex items-center gap-2">
                             <span
                               className="w-4 h-4 rounded-full border border-border"
                               style={{ backgroundColor: c.hex }}

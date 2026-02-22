@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import Layout from "@/components/layout/Layout";
+import StoreEntrySection from "@/components/StoreEntrySection";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
 import lifestyleBed from "@/assets/lifestyle-bed.jpg";
 import lifestyleChair from "@/assets/lifestyle-chair.jpg";
@@ -196,6 +197,9 @@ const Index = () => {
           ))}
         </div>
       </section>
+
+      {/* Store Entry */}
+      <StoreEntrySection />
     </Layout>
   );
 };

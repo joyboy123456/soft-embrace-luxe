@@ -1,169 +1,77 @@
-import { useMemo, useState } from "react";
-import { useLanguage } from "@/contexts/LanguageContext";
 import Layout from "@/components/layout/Layout";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { useProducts } from "@/hooks/useProducts";
-import type { Product } from "@/types/product";
+import { useLanguage } from "@/contexts/LanguageContext";
 
-import pillowErgonomic from "@/assets/pillow-ergonomic.jpg";
-import pillowSquare from "@/assets/pillow-square.jpg";
+import gallery1 from "@/assets/gallery-1.jpg";
+import gallery2 from "@/assets/gallery-2.jpg";
+import gallery3 from "@/assets/gallery-3.jpg";
+import gallery4 from "@/assets/gallery-4.jpg";
+import gallery5 from "@/assets/gallery-5.jpg";
+import gallery6 from "@/assets/gallery-6.jpg";
 
-type Filter = "all" | "ergonomic" | "square";
+const BUY_URL =
+  "https://tuicashier.youzan.com/pay/wscgoods_order?banner_id=f.90403027~goods.5~5~wB9npDsT&alg_id=0&slg=tagGoodList-default%2COpBottom%2Cuuid%2CabTraceId&components_style_layout=1&reft=1771733737125&spm=f.90403027&alias=1ye7fs589pfyqss";
 
-const Pillows = () => {
+const images = [gallery5, gallery1, gallery6, gallery2, gallery3, gallery4];
+
+export default function Pillows() {
   const { t } = useLanguage();
-  const [filter, setFilter] = useState<Filter>("all");
-  const [selected, setSelected] = useState<Product | null>(null);
-  const { data: products = [], isLoading } = useProducts(filter === "all" ? undefined : filter);
-
-  const filters: { key: Filter; zh: string; en: string }[] = [
-    { key: "all", zh: "全部", en: "All" },
-    { key: "ergonomic", zh: "人体工学枕", en: "Ergonomic" },
-    { key: "square", zh: "方型枕", en: "Square" },
-  ];
-
-  const getFallbackImage = (p: Pick<Product, "type">) => (p.type === "square" ? pillowSquare : pillowErgonomic);
-
-  const selectedImage = useMemo(() => {
-    if (!selected) return null;
-    return selected.image_url || getFallbackImage(selected);
-  }, [selected]);
 
   return (
     <Layout>
-      {/* Banner */}
-      <section className="py-20 md:py-28 text-center border-b border-border">
-        <p className="text-xs tracking-[0.5em] uppercase text-muted-foreground mb-4">Pillow Collection</p>
+      {/* Hero */}
+      <header className="max-w-7xl mx-auto px-6 pt-20 md:pt-24 pb-12 border-b border-border">
+        <p className="text-xs tracking-[0.5em] uppercase text-muted-foreground mb-4">Gallery</p>
         <h1 className="text-3xl md:text-5xl font-light text-foreground tracking-wide">
-          {t("枕头系列", "Pillow Collection")}
+          {t("视觉展示", "Gallery")}
         </h1>
-      </section>
-
-      {/* Filters */}
-      <div className="max-w-7xl mx-auto px-6 py-8 flex justify-center gap-6">
-        {filters.map((f) => (
-          <button
-            key={f.key}
-            onClick={() => setFilter(f.key)}
-            className={`text-xs tracking-[0.2em] uppercase pb-1 transition-colors ${
-              filter === f.key
-                ? "text-foreground border-b border-foreground"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            {t(f.zh, f.en)}
-          </button>
-        ))}
-      </div>
-
-      {/* Product Grid */}
-      <div className="max-w-7xl mx-auto px-6 pb-24">
-        {isLoading ? (
-          <p className="text-center text-muted-foreground py-20">{t("加载中…", "Loading…")}</p>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
-            {products.map((product) => {
-              const imageSrc = product.image_url || getFallbackImage(product);
-              return (
-                <div
-                  key={product.id}
-                  className="group cursor-pointer"
-                  onClick={() => setSelected(product)}
-                >
-                  <div className="aspect-square bg-secondary/30 overflow-hidden mb-4">
-                    <img
-                      src={imageSrc}
-                      alt={t(product.name_zh, product.name_en)}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      loading="lazy"
-                    />
-                  </div>
-                  <h3 className="text-sm text-foreground tracking-wide mb-2">{t(product.name_zh, product.name_en)}</h3>
-                  <div className="flex items-center gap-2 mb-2">
-                    {product.colors.map((c, i) => (
-                      <span
-                        key={i}
-                        className="w-3 h-3 rounded-full border border-border"
-                        style={{ backgroundColor: c.hex }}
-                        title={c.name}
-                      />
-                    ))}
-                  </div>
-                  <p className="text-xs text-muted-foreground">{product.size}</p>
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </div>
-
-      {/* Product Detail Dialog */}
-      <Dialog open={!!selected} onOpenChange={() => setSelected(null)}>
-        <DialogContent className="max-w-2xl">
-          {selected && (
-            <>
-              <DialogHeader>
-                <DialogTitle className="text-lg font-light tracking-wide">
-                  {t(selected.name_zh, selected.name_en)}
-                </DialogTitle>
-                <DialogDescription className="text-xs tracking-widest uppercase text-muted-foreground">
-                  {t(selected.type_zh, selected.type_en)}
-                </DialogDescription>
-              </DialogHeader>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-                <div className="aspect-square bg-secondary/30 overflow-hidden">
-                  {selectedImage && (
-                    <img
-                      src={selectedImage}
-                      alt={t(selected.name_zh, selected.name_en)}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                  )}
-                </div>
-                <div className="flex flex-col justify-center">
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-6">
-                    {t(selected.desc_zh, selected.desc_en)}
-                  </p>
-                  <div className="space-y-4">
-                    <div>
-                      <p className="text-xs tracking-widest uppercase text-muted-foreground mb-2">{t("尺寸", "Size")}</p>
-                      <p className="text-sm text-foreground">{selected.size}</p>
-                    </div>
-                    <div>
-                      <p className="text-xs tracking-widest uppercase text-muted-foreground mb-2">
-                        {t("可选颜色", "Available Colors")}
-                      </p>
-                      <div className="flex gap-3">
-                        {selected.colors.map((c, i) => (
-                          <div key={i} className="flex items-center gap-2">
-                            <span className="w-4 h-4 rounded-full border border-border" style={{ backgroundColor: c.hex }} />
-                            <span className="text-xs text-muted-foreground">{c.name}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <div>
-                      <p className="text-xs tracking-widest uppercase text-muted-foreground mb-2">
-                        {t("材质特点", "Material Features")}
-                      </p>
-                      <ul className="text-xs text-muted-foreground space-y-1">
-                        <li>· {t("石墨烯纤维面料", "Graphene fiber fabric")}</li>
-                        <li>· {t("远红外理疗功能", "Far-infrared therapy")}</li>
-                        <li>· {t("抗菌率 ≥99%", "Antibacterial rate ≥99%")}</li>
-                        <li>· {t("高效导热散热", "Efficient thermal conductivity")}</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </>
+        <p className="mt-4 text-sm text-muted-foreground max-w-2xl leading-relaxed">
+          {t(
+            "用实拍记录枕头的触感、支撑与使用场景。",
+            "Real-life photos showing texture, support, and everyday comfort.",
           )}
-        </DialogContent>
-      </Dialog>
+        </p>
+      </header>
+
+      {/* Masonry-ish grid */}
+      <main className="max-w-7xl mx-auto px-6 py-14">
+        <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 [column-fill:_balance]">
+          {images.map((src, idx) => (
+            <figure
+              key={idx}
+              className="group mb-6 break-inside-avoid overflow-hidden bg-secondary/30"
+            >
+              <img
+                src={src}
+                alt={t("枕头实拍展示", "Pillow photo") + ` ${idx + 1}`}
+                className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                loading="lazy"
+              />
+            </figure>
+          ))}
+        </div>
+
+        {/* Buy CTA */}
+        <section className="mt-16 pt-12 border-t border-border text-center">
+          <p className="text-xs tracking-[0.4em] uppercase text-muted-foreground mb-4">
+            {t("官方购买", "Official Purchase")}
+          </p>
+          <h2 className="text-2xl md:text-3xl font-light text-foreground mb-6">
+            {t("现在下单，开启一夜好眠", "Order now, sleep better tonight")}
+          </h2>
+          <a
+            href={BUY_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center border border-border px-10 py-3 text-xs tracking-[0.3em] uppercase hover:bg-foreground hover:text-background transition-colors"
+          >
+            {t("立即购买", "Buy Now")}
+          </a>
+          <p className="mt-4 text-xs text-muted-foreground">
+            {t("将在新标签页打开官方支付页面", "Opens the official checkout in a new tab")}
+          </p>
+        </section>
+      </main>
     </Layout>
   );
-};
-
-export default Pillows;
+}
 

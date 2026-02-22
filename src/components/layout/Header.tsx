@@ -10,7 +10,7 @@ const Header = () => {
 
   const navLinks = [
     { to: "/", label: t("首页", "Home") },
-    { to: "/pillows", label: t("枕头系列", "Pillows") },
+    { to: "/pillows", label: t("视觉展示", "Gallery") },
     { to: "/brainwave", label: t("助眠理念", "Sleep Science") },
     { to: "/about", label: t("关于我们", "About") },
   ];

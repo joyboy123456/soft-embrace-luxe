@@ -5,25 +5,37 @@ const BrainwaveDemo = () => {
   const { t } = useLanguage();
   const [heated, setHeated] = useState(false);
 
-  /* generate wave polyline points */
-  const wavePoints = useMemo(() => {
-    const count = 300;
-    return Array.from({ length: count }, (_, i) => {
-      const x = (i / (count - 1)) * 800;
-      if (heated) {
-        // smooth, coherent alpha wave
-        const y = 50 + 28 * Math.sin((i / (count - 1)) * Math.PI * 2 * 4);
+  /* generate wave polyline points (α + θ) */
+  const { alphaPoints, thetaPoints } = useMemo(() => {
+    const count = 320;
+    const width = 800;
+
+    const gen = (baseline: number, mainCycles: number) =>
+      Array.from({ length: count }, (_, i) => {
+        const p = i / (count - 1);
+        const x = p * width;
+
+        if (heated) {
+          // calmer + more coherent
+          const smooth = Math.sin(p * Math.PI * 2 * mainCycles) * 16;
+          const micro = Math.sin(p * Math.PI * 2 * (mainCycles * 3.1)) * 2;
+          const y = baseline + smooth + micro;
+          return `${x},${y}`;
+        }
+
+        // more mixed + irregular (science demo only)
+        const base = Math.sin(p * Math.PI * 2 * (mainCycles * 1.6)) * 8;
+        const noise1 = Math.sin(p * Math.PI * 2 * (mainCycles * 3.4)) * 7;
+        const noise2 = Math.sin(p * Math.PI * 2 * (mainCycles * 6.1)) * 5;
+        const noise3 = Math.cos(p * Math.PI * 2 * (mainCycles * 9.7)) * 3;
+        const y = baseline + base + noise1 + noise2 + noise3;
         return `${x},${y}`;
-      } else {
-        // noisy, irregular waveform
-        const base = Math.sin((i / (count - 1)) * Math.PI * 2 * 7) * 10;
-        const noise1 = Math.sin((i / (count - 1)) * Math.PI * 2 * 13) * 8;
-        const noise2 = Math.sin((i / (count - 1)) * Math.PI * 2 * 23) * 5;
-        const noise3 = Math.cos((i / (count - 1)) * Math.PI * 2 * 37) * 3;
-        const y = 50 + base + noise1 + noise2 + noise3;
-        return `${x},${y}`;
-      }
-    }).join(" ");
+      }).join(" ");
+
+    return {
+      thetaPoints: gen(46, 2.2),
+      alphaPoints: gen(118, 3.4),
+    };
   }, [heated]);
 
   return (
@@ -53,20 +65,35 @@ const BrainwaveDemo = () => {
 
       {/* waveform */}
       <div className="px-6 py-8">
-        <svg viewBox="0 0 800 100" className="w-full h-24" preserveAspectRatio="none">
+        <svg viewBox="0 0 800 160" className="w-full h-36" preserveAspectRatio="none" aria-label="Brainwave demo">
+          <text x="6" y="18" className="fill-muted-foreground" fontSize="12">
+            θ 4–8Hz
+          </text>
+          <text x="6" y="92" className="fill-muted-foreground" fontSize="12">
+            α 8–13Hz
+          </text>
+
           <polyline
-            points={wavePoints}
+            points={thetaPoints}
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth="3.5"
             strokeLinecap="round"
-            className={`transition-all duration-700 ${heated ? "text-foreground" : "text-muted-foreground/50"}`}
+            className={`transition-all duration-700 ${heated ? "text-muted-foreground" : "text-muted-foreground/50"}`}
+          />
+          <polyline
+            points={alphaPoints}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3.5"
+            strokeLinecap="round"
+            className={`transition-all duration-700 ${heated ? "text-foreground" : "text-muted-foreground/60"}`}
           />
         </svg>
         <p className="text-center text-xs text-muted-foreground mt-2">
           {heated
-            ? t("α 波主导 · 规律平缓", "α-wave dominant · Regular & calm")
-            : t("多频混杂 · 不规则波动", "Mixed frequencies · Irregular activity")}
+            ? t("α/θ 更连贯 · 更平缓（科普）", "α/θ more coherent · calmer (demo)")
+            : t("α/θ 多频混杂 · 更杂乱（科普）", "α/θ mixed frequencies · noisier (demo)")}
         </p>
       </div>
 

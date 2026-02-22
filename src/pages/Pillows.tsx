@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import Layout from "@/components/layout/Layout";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { useProducts } from "@/hooks/useProducts";
 import type { Product } from "@/types/product";
+
+import pillowErgonomic from "@/assets/pillow-ergonomic.jpg";
+import pillowSquare from "@/assets/pillow-square.jpg";
 
 type Filter = "all" | "ergonomic" | "square";
 
@@ -19,13 +22,18 @@ const Pillows = () => {
     { key: "square", zh: "方型枕", en: "Square" },
   ];
 
+  const getFallbackImage = (p: Pick<Product, "type">) => (p.type === "square" ? pillowSquare : pillowErgonomic);
+
+  const selectedImage = useMemo(() => {
+    if (!selected) return null;
+    return selected.image_url || getFallbackImage(selected);
+  }, [selected]);
+
   return (
     <Layout>
       {/* Banner */}
       <section className="py-20 md:py-28 text-center border-b border-border">
-        <p className="text-xs tracking-[0.5em] uppercase text-muted-foreground mb-4">
-          Pillow Collection
-        </p>
+        <p className="text-xs tracking-[0.5em] uppercase text-muted-foreground mb-4">Pillow Collection</p>
         <h1 className="text-3xl md:text-5xl font-light text-foreground tracking-wide">
           {t("枕头系列", "Pillow Collection")}
         </h1>
@@ -54,41 +62,37 @@ const Pillows = () => {
           <p className="text-center text-muted-foreground py-20">{t("加载中…", "Loading…")}</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
-            {products.map((product) => (
-              <div
-                key={product.id}
-                className="group cursor-pointer"
-                onClick={() => setSelected(product)}
-              >
-                <div className="aspect-square bg-secondary/30 overflow-hidden mb-4">
-                  {product.image_url ? (
+            {products.map((product) => {
+              const imageSrc = product.image_url || getFallbackImage(product);
+              return (
+                <div
+                  key={product.id}
+                  className="group cursor-pointer"
+                  onClick={() => setSelected(product)}
+                >
+                  <div className="aspect-square bg-secondary/30 overflow-hidden mb-4">
                     <img
-                      src={product.image_url}
+                      src={imageSrc}
                       alt={t(product.name_zh, product.name_en)}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
                     />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm">
-                      {t("暂无图片", "No Image")}
-                    </div>
-                  )}
+                  </div>
+                  <h3 className="text-sm text-foreground tracking-wide mb-2">{t(product.name_zh, product.name_en)}</h3>
+                  <div className="flex items-center gap-2 mb-2">
+                    {product.colors.map((c, i) => (
+                      <span
+                        key={i}
+                        className="w-3 h-3 rounded-full border border-border"
+                        style={{ backgroundColor: c.hex }}
+                        title={c.name}
+                      />
+                    ))}
+                  </div>
+                  <p className="text-xs text-muted-foreground">{product.size}</p>
                 </div>
-                <h3 className="text-sm text-foreground tracking-wide mb-2">
-                  {t(product.name_zh, product.name_en)}
-                </h3>
-                <div className="flex items-center gap-2 mb-2">
-                  {product.colors.map((c, i) => (
-                    <span
-                      key={i}
-                      className="w-3 h-3 rounded-full border border-border"
-                      style={{ backgroundColor: c.hex }}
-                      title={c.name}
-                    />
-                  ))}
-                </div>
-                <p className="text-xs text-muted-foreground">{product.size}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>
@@ -108,16 +112,13 @@ const Pillows = () => {
               </DialogHeader>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
                 <div className="aspect-square bg-secondary/30 overflow-hidden">
-                  {selected.image_url ? (
+                  {selectedImage && (
                     <img
-                      src={selected.image_url}
+                      src={selectedImage}
                       alt={t(selected.name_zh, selected.name_en)}
                       className="w-full h-full object-cover"
+                      loading="lazy"
                     />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-                      {t("暂无图片", "No Image")}
-                    </div>
                   )}
                 </div>
                 <div className="flex flex-col justify-center">
@@ -126,9 +127,7 @@ const Pillows = () => {
                   </p>
                   <div className="space-y-4">
                     <div>
-                      <p className="text-xs tracking-widest uppercase text-muted-foreground mb-2">
-                        {t("尺寸", "Size")}
-                      </p>
+                      <p className="text-xs tracking-widest uppercase text-muted-foreground mb-2">{t("尺寸", "Size")}</p>
                       <p className="text-sm text-foreground">{selected.size}</p>
                     </div>
                     <div>
@@ -138,10 +137,7 @@ const Pillows = () => {
                       <div className="flex gap-3">
                         {selected.colors.map((c, i) => (
                           <div key={i} className="flex items-center gap-2">
-                            <span
-                              className="w-4 h-4 rounded-full border border-border"
-                              style={{ backgroundColor: c.hex }}
-                            />
+                            <span className="w-4 h-4 rounded-full border border-border" style={{ backgroundColor: c.hex }} />
                             <span className="text-xs text-muted-foreground">{c.name}</span>
                           </div>
                         ))}
@@ -170,3 +166,4 @@ const Pillows = () => {
 };
 
 export default Pillows;
+

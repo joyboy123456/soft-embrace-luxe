@@ -30,16 +30,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact */}
-          <div>
-            <h4 className="text-xs tracking-widest uppercase text-foreground mb-4">
-              {t("联系我们", "Contact")}
-            </h4>
-            <ul className="space-y-3 text-sm text-muted-foreground">
-              <li>info@graphene-pillow.com</li>
-              <li>{t("广东省 · 中国", "Guangdong · China")}</li>
-            </ul>
-          </div>
+
         </div>
 
         <div className="mt-16 pt-8 border-t border-border text-center text-xs text-muted-foreground tracking-wider">

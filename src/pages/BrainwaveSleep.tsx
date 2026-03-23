@@ -203,7 +203,7 @@ const BrainwaveSleep = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
-            { icon: "◎", zh: "人体工学支撑", en: "Ergonomic Support", descZh: "贴合颈椎曲线，舒适托持", descEn: "Contoured to support natural cervical alignment" },
+            { icon: "◎", zh: "舒适贴合支撑", en: "Comfortable Support", descZh: "贴合颈椎曲线，舒适托持", descEn: "Contoured to support natural cervical alignment" },
             { icon: "○", zh: "石墨烯亲肤面料", en: "Graphene Fabric", descZh: "柔软透气，抗菌率 ≥99%", descEn: "Soft, breathable, ≥99% antibacterial" },
             { icon: "◇", zh: "安静无噪音", en: "Silent Comfort", descZh: "零声响材质，不干扰入睡", descEn: "Zero-noise material, undisturbed sleep" },
             { icon: "△", zh: "远红外温感", en: "Far-IR Warmth", descZh: "石墨烯纤维自然温热体验", descEn: "Natural gentle warmth from graphene fibers" },

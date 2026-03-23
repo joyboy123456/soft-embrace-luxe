@@ -23,17 +23,17 @@ const Index = () => {
     <Layout>
       {/* Hero */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        <img src={lifestyleBed} alt="GRAPHENE" className="absolute inset-0 w-full h-full object-cover" />
+        <img src={lifestyleBed} alt="格蓝丰 - 石墨烯脑电波" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-foreground/30" />
         <div className="relative z-10 text-center text-primary-foreground px-6">
           <p className="text-sm tracking-[0.5em] uppercase mb-4 opacity-80">
             Go, Let You Free
           </p>
           <h1 className="text-5xl md:text-7xl tracking-[0.2em] font-light mb-8">
-            GRAPHENE
+            格蓝丰 - 石墨烯脑电波
           </h1>
           <p className="text-sm tracking-[0.3em] mb-10 opacity-70">
-            {t("格蓝丰 · 石墨烯寝具", "Graphene Bedding")}
+            {t("格蓝丰 · 石墨烯脑电波寝具", "Graphene Brainwave Bedding")}
           </p>
           <Link
             to="/pillows"
@@ -52,18 +52,18 @@ const Index = () => {
               {t("品牌理念", "Brand Philosophy")}
             </p>
             <h2 className="text-3xl md:text-4xl font-light text-foreground mb-8 leading-tight">
-              {t("十二载，专注石墨烯", "Twelve Years, Devoted to Graphene")}
+              {t("十四载，专注石墨烯脑电波", "Fourteen Years, Devoted to Graphene Brainwave")}
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-6">
               {t(
-                "格蓝丰自创立以来，始终致力于将石墨烯新材料应用于寝具领域。我们相信，一个好枕头能改变一整夜的睡眠，进而改变一整天的生活。",
-                "Since its founding, GRAPHENE has been dedicated to applying graphene materials to bedding. We believe a great pillow can transform a night's sleep, and in turn, transform your entire day."
+                "格蓝丰自创立以来，始终致力于将石墨烯脑电波新材料应用于寝具领域。我们相信，一个好枕头能改变一整夜的睡眠，进而改变一整天的生活。",
+                "Since its founding, GRAPHENE has been dedicated to applying graphene brainwave materials to bedding. We believe a great pillow can transform a night's sleep, and in turn, transform your entire day."
               )}
             </p>
             <p className="text-muted-foreground leading-relaxed">
               {t(
-                "石墨烯的远红外、抗菌、导热特性，让每一款枕头都成为科技与舒适的完美结合。",
-                "The far-infrared, antibacterial, and thermal properties of graphene make every pillow a perfect fusion of technology and comfort."
+                "石墨烯的远红外、抗菌、导热特性，配合脑电波助眠科技，让每一款枕头都成为科技与舒适的完美结合。",
+                "The far-infrared, antibacterial, and thermal properties of graphene, combined with brainwave sleep technology, make every pillow a perfect fusion of technology and comfort."
               )}
             </p>
           </div>
@@ -117,7 +117,7 @@ const Index = () => {
             {t("石墨烯科技", "Graphene Technology")}
           </p>
           <h2 className="text-3xl md:text-4xl font-light text-primary-foreground mb-8 leading-tight">
-            {t("新材料，新睡眠", "New Material, New Sleep")}
+            {t("新材料，新睡眠，新脑电波", "New Material, New Sleep, New Brainwave")}
           </h2>
           <div className="grid grid-cols-3 gap-8 mt-12">
             {[
@@ -182,7 +182,7 @@ const Index = () => {
       <section className="max-w-7xl mx-auto px-6 py-24">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {[
-            { image: productErgoStack, zh: "人体工学枕", en: "Ergonomic Pillows" },
+            { image: productErgoStack, zh: "石墨烯脑电波枕", en: "Graphene Brainwave Pillows" },
             { image: lifestyleFlatlay, zh: "方型枕", en: "Square Pillows" },
           ].map((cat) => (
             <Link key={cat.en} to="/pillows" className="group relative aspect-[3/2] overflow-hidden">

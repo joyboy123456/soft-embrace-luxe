@@ -22,12 +22,12 @@ export default function Pillows() {
       <header className="max-w-7xl mx-auto px-6 pt-20 md:pt-24 pb-12 border-b border-border">
         <p className="text-xs tracking-[0.5em] uppercase text-muted-foreground mb-4">Gallery</p>
         <h1 className="text-3xl md:text-5xl font-light text-foreground tracking-wide">
-          {t("视觉展示", "Gallery")}
+          {t("石墨烯脑电波助眠枕", "Graphene Brainwave Sleep Pillow")}
         </h1>
         <p className="mt-4 text-sm text-muted-foreground max-w-2xl leading-relaxed">
           {t(
-            "用实拍记录枕头的触感、支撑与使用场景。",
-            "Real-life photos showing texture, support, and everyday comfort.",
+            "用实拍记录枕头的触感、支撑与使用场景，石墨烯脑电波科技助你入眠。",
+            "Real-life photos showing texture, support, and everyday comfort with graphene brainwave sleep technology.",
           )}
         </p>
       </header>
@@ -42,7 +42,7 @@ export default function Pillows() {
             >
               <img
                 src={src}
-                alt={t("枕头实拍展示", "Pillow photo") + ` ${idx + 1}`}
+                alt={t("石墨烯脑电波助眠枕实拍", "Graphene Brainwave Pillow Photo") + ` ${idx + 1}`}
                 className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.02]"
                 loading="lazy"
               />
@@ -74,4 +74,3 @@ export default function Pillows() {
     </Layout>
   );
 }
-

@@ -13,12 +13,14 @@ const About = () => {
     { year: "2018", zh: "产品线扩展至人体工学枕与方型枕两大系列", en: "Product line expanded to Ergonomic and Square pillow series" },
     { year: "2021", zh: "石墨烯纤维技术升级，抗菌率达到 99%", en: "Graphene fiber technology upgraded, antibacterial rate reaches 99%" },
     { year: "2024", zh: "品牌焕新，致力于成为全球石墨烯寝具领导者", en: "Brand refresh, aiming to become a global leader in graphene bedding" },
+    { year: "2025", zh: "石墨烯脑电波助眠技术取得突破，开启智能睡眠新赛道", en: "Breakthrough in graphene brainwave sleep-aid technology, entering the smart sleep era" },
+    { year: "2026", zh: "「睡眠新质生产力」品牌战略发布，脑电波助眠枕头正式面世", en: "'New Quality Productivity of Sleep' brand strategy launched, brainwave sleep-aid pillow officially released" },
   ];
 
   return (
     <Layout>
       {/* Hero */}
-      <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
+      <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
         <img src={lifestyleCloseup} alt="GRAPHENE" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-foreground/50" />
         <div className="relative z-10 text-center text-primary-foreground">
@@ -33,12 +35,12 @@ const About = () => {
           {t("品牌故事", "Our Story")}
         </p>
         <h2 className="text-3xl font-light text-foreground mb-8">
-          {t("十二载，只为一个好枕头", "Twelve Years, For One Great Pillow")}
+          {t("十四载，只为一个好枕头", "Fourteen Years, For One Great Pillow")}
         </h2>
         <p className="text-muted-foreground leading-loose">
           {t(
-            "格蓝丰创立于2012年，我们始终怀着一个简单的信念：每个人都值得拥有一夜好眠。十二年来，我们专注于石墨烯新材料的研究与应用，将这种被誉为「新材料之王」的物质融入枕头设计，让科技服务于生活，让每一晚都成为对身体最好的馈赠。",
-            "Founded in 2012, GRAPHENE has always held a simple belief: everyone deserves a great night's sleep. For twelve years, we have focused on the research and application of graphene — the 'King of New Materials' — integrating it into pillow design so that technology serves life, making every night a gift to your body."
+            "格蓝丰创立于2012年，我们始终怀着一个简单的信念：每个人都值得拥有一夜好眠。十四年来，我们专注于石墨烯新材料的研究与应用，将这种被誉为「新材料之王」的物质融入枕头设计，让科技服务于生活，让每一晚都成为对身体最好的馈赠。",
+            "Founded in 2012, GRAPHENE has always held a simple belief: everyone deserves a great night's sleep. For fourteen years, we have focused on the research and application of graphene — the 'King of New Materials' — integrating it into pillow design so that technology serves life, making every night a gift to your body."
           )}
         </p>
       </section>
@@ -49,7 +51,7 @@ const About = () => {
           <p className="text-xs tracking-[0.4em] uppercase text-muted-foreground mb-12 text-center">
             {t("品牌历程", "Brand Timeline")}
           </p>
-          <div className="space-y-12">
+          <div className="space-y-8">
             {timeline.map((item) => (
               <div key={item.year} className="flex gap-8 items-start">
                 <span className="text-2xl font-light text-foreground min-w-[80px]">{item.year}</span>

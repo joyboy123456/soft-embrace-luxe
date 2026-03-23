@@ -12,7 +12,7 @@ const Footer = () => {
             <h3 className="text-lg tracking-[0.3em] font-light text-foreground mb-4">GRAPHENE</h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
               {t(
-                "格蓝丰 · 十二载专注石墨烯寝具，以科技成就好睡眠。",
+                "格蓝丰 · 十四载专注石墨烯寝具，以科技成就好睡眠。",
                 "GRAPHENE · 12 years dedicated to graphene bedding, achieving better sleep through technology."
               )}
             </p>

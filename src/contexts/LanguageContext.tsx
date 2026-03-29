@@ -11,7 +11,7 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | null>(null);
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [lang, setLang] = useState<Language>("zh");
+  const [lang, setLang] = useState<Language>("en");
   const t = (zh: string, en: string) => (lang === "zh" ? zh : en);
 
   return (

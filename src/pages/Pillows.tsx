@@ -7,11 +7,14 @@ import gallery3 from "@/assets/gallery-3.jpg";
 import gallery4 from "@/assets/gallery-4.jpg";
 import gallery5 from "@/assets/gallery-5.jpg";
 import gallery6 from "@/assets/gallery-6.jpg";
+import gallery7 from "@/assets/gallery-7.png";
+import gallery8 from "@/assets/gallery-8.png";
+import gallery9 from "@/assets/gallery-9.png";
 
 const BUY_URL =
   "https://tuicashier.youzan.com/pay/wscgoods_order?banner_id=f.90403027~goods.5~5~wB9npDsT&alg_id=0&slg=tagGoodList-default%2COpBottom%2Cuuid%2CabTraceId&components_style_layout=1&reft=1771733737125&spm=f.90403027&alias=1ye7fs589pfyqss";
 
-const images = [gallery5, gallery1, gallery6, gallery2, gallery3, gallery4];
+const images = [gallery7, gallery8, gallery9, gallery5, gallery1, gallery6, gallery2, gallery3, gallery4];
 
 export default function Pillows() {
   const { t } = useLanguage();
